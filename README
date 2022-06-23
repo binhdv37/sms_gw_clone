@@ -1,0 +1,19 @@
+[RELEASE NOTE] - 20220121
+
+
+[DEPLOYMENT NOTE]
+- Add new column to table [incoming]: 
+	- name: uuid
+	- type: text(36)
+	- script:
+		ALTER TABLE public.incoming
+		ADD COLUMN uuid character varying(36) COLLATE pg_catalog."default";
+- Add new column to table [outgoing]: 
+	- name: uuid
+	- type: text(36)
+	- script:
+		ALTER TABLE public.outgoing
+		ADD COLUMN uuid character varying(36) COLLATE pg_catalog."default";
+- Run "./docker/build_and_run.bat" to rebuild the whole project -> create and run all docker instance
+- Should run consumer instances one by one with a delay time (already set up in docker-compose): to avoid all instance connections to MBF are time out at the same time.
+

@@ -1,0 +1,105 @@
+# Docker Compose file Reference (https://docs.docker.com/compose/compose-file/)
+
+version: '3.7'
+
+# Define services
+services:
+    # Data Service
+    data-service:
+        build:
+            context: dataServices
+            dockerfile: Dockerfile
+        ports:
+            - "8889:8889"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /dataServices/dataSevices.env
+        
+    # Producer Service
+    producer-service:
+        build:
+            context: producers
+            dockerfile: Dockerfile
+        ports:
+            - "8888:8888"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /producers/producers.env
+            
+    # Consumer Service
+    consumer-service-1:
+        build:
+            context: consumers
+            dockerfile: Dockerfile
+        ports:
+            - "8887:8887"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /consumers/consumers.env
+        environment:
+            - SMPP_CLIENT_DELAY_BEFORE_START=0
+            - CONSUMER_LOG_FILE_NAME=logSmsGw/consumers_1.log
+            
+    # Consumer Service
+    consumer-service-2:
+        build:
+            context: consumers
+            dockerfile: Dockerfile
+        ports:
+            - "8886:8887"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /consumers/consumers.env
+        environment:
+            - SMPP_CLIENT_DELAY_BEFORE_START=10000
+            - CONSUMER_LOG_FILE_NAME=logSmsGw/consumers_2.log
+            
+    # Consumer Service
+    consumer-service-3:
+        build:
+            context: consumers
+            dockerfile: Dockerfile
+        ports:
+            - "8885:8887"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /consumers/consumers.env
+        environment:
+            - SMPP_CLIENT_DELAY_BEFORE_START=20000
+            - CONSUMER_LOG_FILE_NAME=logSmsGw/consumers_3.log
+            
+    # Consumer Service
+    consumer-service-4:
+        build:
+            context: consumers
+            dockerfile: Dockerfile
+        ports:
+            - "8884:8887"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /consumers/consumers.env
+        environment:
+            - SMPP_CLIENT_DELAY_BEFORE_START=30000
+            - CONSUMER_LOG_FILE_NAME=logSmsGw/consumers_4.log
+            
+    # Consumer Service
+    consumer-service-5:
+        build:
+            context: consumers
+            dockerfile: Dockerfile
+        ports:
+            - "8883:8887"
+        volumes:
+            - /log:/logSmsGw
+        env_file:
+            - /consumers/consumers.env
+        environment:
+            - SMPP_CLIENT_DELAY_BEFORE_START=40000
+            - CONSUMER_LOG_FILE_NAME=logSmsGw/consumers_5.log
+    
